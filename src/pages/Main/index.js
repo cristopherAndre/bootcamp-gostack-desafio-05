@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
 import api from '../../services/api';
-import { Form, SubmitButton, List } from './styles';
+
 import Container from '../../components/Container';
+import { Form, SubmitButton, List } from './styles';
 
 export default class Main extends Component {
   state = {
@@ -16,21 +18,23 @@ export default class Main extends Component {
   // Carregar os dados do localStorage
   componentDidMount() {
     const repositories = localStorage.getItem('repositories');
+
     if (repositories) {
       this.setState({ repositories: JSON.parse(repositories) });
     }
   }
 
-  // Salvar os dados no localSorage
+  // Salvar os dados do localStorage
   componentDidUpdate(_, prevState) {
     const { repositories } = this.state;
+
     if (prevState.repositories !== repositories) {
       localStorage.setItem('repositories', JSON.stringify(repositories));
     }
   }
 
   handleInputChange = (e) => {
-    this.setState({ newRepo: e.target.value });
+    this.setState({ newRepo: e.target.value, error: null });
   };
 
   handleSubmit = async (e) => {
@@ -66,7 +70,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { repositories, newRepo, loading, error } = this.state;
+    const { newRepo, repositories, loading, error } = this.state;
 
     return (
       <Container>
@@ -78,12 +82,12 @@ export default class Main extends Component {
         <Form onSubmit={this.handleSubmit} error={error}>
           <input
             type="text"
-            placeholder="Adicionar Repositório"
+            placeholder="Adicionar repositório"
             value={newRepo}
             onChange={this.handleInputChange}
           />
 
-          <SubmitButton loading={loading ? 1 : 0}>
+          <SubmitButton loading={loading}>
             {loading ? (
               <FaSpinner color="#FFF" size={14} />
             ) : (

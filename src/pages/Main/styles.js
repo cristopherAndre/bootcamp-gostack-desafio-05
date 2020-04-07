@@ -7,10 +7,12 @@ export const Form = styled.form`
 
   input {
     flex: 1;
-    border: 1px solid ${(props) => (props.error ? '#ff6b6b' : '#eee')};
+    border: 1px solid ${props => (props.error ? '#ff6b6b' : '#eee')};
     padding: 10px 15px;
     border-radius: 4px;
     font-size: 16px;
+
+    transition: border 0.25s ease-out;
   }
 `;
 
@@ -19,12 +21,12 @@ const rotate = keyframes`
     transform: rotate(0deg);
   }
 
-  to{
+  to {
     transform: rotate(360deg);
   }
 `;
 
-export const SubmitButton = styled.button.attrs((props) => ({
+export const SubmitButton = styled.button.attrs(props => ({
   type: 'submit',
   disabled: props.loading,
 }))`
@@ -43,7 +45,7 @@ export const SubmitButton = styled.button.attrs((props) => ({
     opacity: 0.6;
   }
 
-  ${(props) =>
+  ${props =>
     props.loading &&
     css`
       svg {
